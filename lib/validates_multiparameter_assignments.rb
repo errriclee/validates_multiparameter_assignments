@@ -2,7 +2,7 @@ module ActiveRecord
   module Validations
     module ClassMethods
       def validates_multiparameter_assignments(options = {})
-        configuration = { :message => ActiveRecord::Errors.default_error_messages[:invalid] }.update(options)
+        configuration = { :message => I18n.translate('activerecord.errors.messages')[:invalid] }.update(options)
         
         alias_method :assign_multiparameter_attributes_without_rescuing, :assign_multiparameter_attributes
         attr_accessor :assignment_error_attrs
