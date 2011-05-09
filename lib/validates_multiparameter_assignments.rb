@@ -2,7 +2,11 @@ module ActiveRecord
   module Validations
     module ClassMethods
       def validates_multiparameter_assignments(options = {})
-        configuration = { :message => I18n.translate('activerecord.errors.messages')[:invalid] }.update(options)
+        configuration = if Rails::VERSION::STRING < "2.2.0"
+          { :message => _("%{fn} is invalid.") }
+        else
+          { :message => I18n.translate('activerecord.errors.messages')[:invalid] }
+        end.update(options)
         
         alias_method :assign_multiparameter_attributes_without_rescuing, :assign_multiparameter_attributes
         attr_accessor :assignment_error_attrs
